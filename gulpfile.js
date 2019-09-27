@@ -42,6 +42,14 @@ gulp.task('inject', gulp.series('copy', function () {
         livereload: true
       }));
   }));
-  gulp.task('watch', gulp.series('serve', function () {
-    gulp.watch(paths.src, gulp.series['inject']);
-  }));
+  gulp.task('watch',gulp.series('serve', function(){
+    gulp.watch(paths.src,gulp.series['inject'])
+    .on('change', function(path, stats) {
+        console.log(path);
+        // code to execute on change
+    })
+    .on('unlink',  function(path, stats) {
+        console.log(path);
+        // code to execute on delete
+    });
+}));
