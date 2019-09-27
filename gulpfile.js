@@ -42,3 +42,6 @@ gulp.task('inject', gulp.series('copy', function () {
         livereload: true
       }));
   }));
+  gulp.task('watch', gulp.series('serve', function () {
+    gulp.watch(paths.src, gulp.series['inject']);
+  }));
