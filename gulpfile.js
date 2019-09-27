@@ -27,18 +27,18 @@ var paths = {
     return gulp.src(paths.srcJS).pipe(gulp.dest(paths.tmp));
   });
 gulp.task('copy',gulp.series('html', 'css', 'js'));
-gulp.task('inject', gulp.series('copy'), function () {
+gulp.task('inject', gulp.series('copy', function () {
     var css = gulp.src(paths.tmpCSS);
     var js = gulp.src(paths.tmpJS);
     return gulp.src(paths.tmpIndex)
       .pipe(inject( css, { relative:true } ))
       .pipe(inject( js, { relative:true } ))
       .pipe(gulp.dest(paths.tmp));
-  });
-  gulp.task('serve', gulp.parallel('inject'), function () {
+  }));
+  gulp.task('serve', gulp.series('inject', function () {
     return gulp.src(paths.tmp)
       .pipe(webserver({
         port: 3000,
         livereload: true
       }));
-  });
+  }));
